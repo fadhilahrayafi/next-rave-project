@@ -10,9 +10,8 @@ import MealIcon from "../assets/icons/MealIcon";
 import CheckmarkIcon from "@/assets/icons/CheckmarkIcon";
 import QuestionMarkIcon from "@/assets/icons/QuestioMarkIcon";
 
-BusIcon
-
-export default function DayByDayItenerary() {
+const DayByDayItenerary = () => {
+    // eslint-disable-next-line react/display-name
     const [areAllOpen, setAreAllOpen] = useState(false);
     const [listItinerary, setListItinerary] = useState<DayItinarery[]>([]);
 
@@ -28,36 +27,38 @@ export default function DayByDayItenerary() {
         setAreAllOpen((prev) => !prev);
     }, []);
 
-    const renderExperienceCards = useMemo(() => (experiences: Experience[]) => (
+    const ExperienceCards = (experiences: Experience[]) => (
         <div className="overflow-x-auto">
-            <div className="grid grid-flow-col gap-6 auto-cols-[minmax(353px,_1fr)] sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                {experiences.map((experience) => (
-                    <div key={experience.name} className="w-[353px] bg-white border border-gray-200 rounded-lg shadow">
-                        <a href="#">
-                            <img className="rounded-t-lg w-[353px]" src={experience.image} alt="" />
-                        </a>
-                        <div className="p-5 grid grid-cols-1 gap-3">
-                            <h2 className="text-h2-title">{experience.name}</h2>
-                            <span className="line-clamp-3">{experience.detail}</span>
-                            <span style={{ fontWeight: 700, marginTop: '1rem', display: 'flex', gap: 6 }}>
-                                {experience.isIncluded ? (
-                                    <span className="text-[0.75rem] flex items-center gap-3">
-                                        <CheckmarkIcon width="1.5rem" height="1.5rem" /> Included with trip
-                                    </span>
-                                ) : (
-                                    <span className="text-[0.75rem] flex items-center justify-between w-full">
-                                        Additional cost applies <QuestionMarkIcon width="1.5rem" height="1.5rem" />
-                                    </span>
-                                )}
-                            </span>
+                <div className="grid grid-flow-col gap-6 auto-cols-[minmax(353px,_1fr)] sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                    {experiences.map((experience) => (
+                        <div key={experience.name} className="w-[353px] bg-white border border-gray-200 rounded-lg shadow">
+                            <a href="#">
+                                <img className="rounded-t-lg w-[353px]" src={experience.image} alt="" />
+                            </a>
+                            <div className="p-5 grid grid-cols-1 gap-3">
+                                <h2 className="text-h2-title">{experience.name}</h2>
+                                <span className="line-clamp-3">{experience.detail}</span>
+                                <span style={{ fontWeight: 700, marginTop: '1rem', display: 'flex', gap: 6 }}>
+                                    {experience.isIncluded ? (
+                                        <span className="text-[0.75rem] flex items-center gap-3">
+                                            <CheckmarkIcon width="1.5rem" height="1.5rem" /> Included with trip
+                                        </span>
+                                    ) : (
+                                        <span className="text-[0.75rem] flex items-center justify-between w-full">
+                                            Additional cost applies <QuestionMarkIcon width="1.5rem" height="1.5rem" />
+                                        </span>
+                                    )}
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
-        </div>
-    ), []);
+        );
+      
+    const renderExperienceCards = useMemo(() => ExperienceCards, []);
 
-    const renderIconSection = useMemo(() => (itinerary: DayItinarery) => (
+    const IconSection = (itinerary: DayItinarery) => (
         <div className="grid grid-cols-2 gap-6 text-[0.875rem]">
             {itinerary.isDepartureTransfer && (
                 <div className="flex gap-3">
@@ -72,7 +73,9 @@ export default function DayByDayItenerary() {
                 </div>
             )}
         </div>
-    ), []);
+    );
+
+    const renderIconSection = useMemo(() => IconSection, []);
 
     return (
         <div className="py-6">
@@ -167,6 +170,20 @@ export default function DayByDayItenerary() {
                                         <span style={{ fontWeight: 600 }}>{itinerary.name}</span>
                                         <h2 className="text-h2-title text-28px">{itinerary.title}</h2>
                                         <span>{itinerary.detail}</span>
+                                        {
+                                            itinerary.isDepartureTransfer &&
+                                            <span className="flex gap-3">
+                                                <BusIcon width="1.5rem" height="1.5rem" fill="#414141" />
+                                                <strong>Arrival Transfer</strong> {itinerary.acomodation}
+                                            </span>
+                                        }
+                                        {
+                                            itinerary.isWelcome &&
+                                            <span className="flex gap-3">
+                                                <WelcomeIcon width="1.5rem" height="1.5rem" fill="#414141" />
+                                                <strong>Welcome</strong> {itinerary.acomodation}
+                                            </span>
+                                        }
                                         <span className="flex gap-3">
                                             <MoonIcon width="1.5rem" height="1.5rem" fill="#414141" />
                                             <strong>Accommodation</strong> {itinerary.acomodation}
@@ -199,3 +216,5 @@ export default function DayByDayItenerary() {
         </div>
     );
 }
+
+export default DayByDayItenerary;

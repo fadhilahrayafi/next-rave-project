@@ -1,6 +1,6 @@
 import { IconProps } from "@/types/Icon";
 
-const WelcomeIcon: React.FC<IconProps> = ({ style, ...rest }) => {
+const WelcomeIcon: React.FC<IconProps> = ({ ...rest }) => {
     return (
       <div style={{width: 'auto', height: 'auto'}}>
         <svg 
